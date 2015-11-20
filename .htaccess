@@ -1,0 +1,10 @@
+Options +FollowSymLinks
+
+RewriteEngine on
+RewriteBase /grest/
+
+RewriteCond %{REQUEST_FILENAME} !-f [NC]
+RewriteCond %{REQUEST_FILENAME} !-d [NC]
+RewriteRule ^(.+)/(.*)$ grest.php [QSA]
+
+AddType x-mapp-php5 .php

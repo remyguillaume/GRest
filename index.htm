@@ -1,0 +1,100 @@
+<html>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+
+</head>
+<body>
+
+<button onclick="get();">GET</button>
+<button onclick="put();">PUT</button>
+<button onclick="post();">POST</button>
+<button onclick="del();">DELETE</button>
+
+<script type="text/javascript">
+
+function get()
+{
+	$.ajax({
+		    url: 'http://prototypes.paloo.fr/grest/User/*',
+		    type: 'GET',
+		    //data: '{}',
+		    contentType: 'application/json; charset=utf-8',
+		    dataType: 'json',
+		    success: function (data) {
+					if (data instanceof Array)
+					{
+						alert("FirstUserId:"+data[0].UserId);
+					}
+					else
+						alert("UserId:"+data.UserId);
+		    },
+				error:function(e, xhr) {
+					alert("error:"+e.responseText);
+				}
+	});
+}
+
+function put()
+{
+	$.ajax({
+		    url: 'http://prototypes.paloo.fr/grest/User/3',
+		    type: 'PUT',
+		    data: '{"FirstName":"totoXX","LastName":"titiXX","CreationDate":"2012-05-24 11:12:10","IsAdministrator":"1"}',
+		    contentType: 'application/json; charset=utf-8',
+		    dataType: 'json',
+		    success: function (data) {
+					if (data instanceof Array)
+					{
+						alert("FirstUserId:"+data[0].UserId);
+					}
+					else
+						alert("UserId:"+data.UserId);
+		    },
+		    error:function(e, xhr) {
+			alert("error:"+e.responseText);
+		    }
+	});
+}
+
+function post()
+{
+	$.ajax({
+		    url: 'http://prototypes.paloo.fr/grest/User/3',
+		    type: 'POST',
+		    data: '{"FirstName":"toto_post","LastName":"titi_post","CreationDate":"2012-05-24 11:12:10","IsAdministrator":"1"}',
+		    contentType: 'application/json; charset=utf-8',
+		    dataType: 'json',
+		    success: function (data) {
+					if (data instanceof Array)
+					{
+						alert("FirstUserId:"+data[0].UserId);
+					}
+					else
+						alert("UserId:"+data.UserId);
+		    },
+		    error:function(e, xhr) {
+			alert("error:"+e.responseText);
+		    }
+	});
+}
+
+function del()
+{
+	$.ajax({
+		    url: 'http://prototypes.paloo.fr/grest/User/3',
+		    type: 'DELETE',
+		    contentType: 'application/json; charset=utf-8',
+		    dataType: 'json',
+		    success: function (data) {
+			alert("User deleted !");
+		    },
+		    error:function(e, xhr) {
+			alert("error:"+e.responseText);
+		    }
+	});
+}
+
+</script>
+
+</body>
+</html>
