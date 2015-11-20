@@ -9,57 +9,57 @@ require_once('DbWriter.php');
 
 class RestService 
 {
-  public function processRequest($_SERVER, $_GET, $_POST) 
-  {
-    $url = UrlHelper::getFullUrl($_SERVER);
-    $method = $_SERVER['REQUEST_METHOD'];
-    switch ($method) 
-    {
-      case 'GET':
-      case 'HEAD':
-        $arguments = $_GET;
-        break;
-      case 'POST':
-        $arguments = $_POST;
-        break;
-      case 'PUT':
-      case 'DELETE':
-        parse_str(file_get_contents('php://input'), $arguments);
-        break;
-    }
-    $accept = $_SERVER['HTTP_ACCEPT'];
-    $this->handleRequest($url, $method, $arguments, $accept);
-  }
-
-  public function handleRequest($url, $method, $arguments, $accept) 
-  {
-    switch($method) 
+	public function processRequest($_SERVER, $_GET, $_POST) 
 	{
-      case 'GET':
-        $this->performGet($url, $arguments, $accept);
-        break;
-      case 'HEAD':
-        $this->performHead($url, $arguments, $accept);
-        break;
-      case 'POST':
-        $this->performPost($url, $arguments, $accept);
-        break;
-      case 'PUT':
-        // Decode arguments
-	$json = key($arguments);
-	$json = str_replace("\\", "", $json);
-	$object = json_decode($json);
-	$tab = (array)$object;
-	// Call PUT
-        $this->performPut($url, $tab, $accept);
-        break;
-      case 'DELETE':
-        $this->performDelete($url, $arguments, $accept);
-        break;
-      default:
-        Exceptions::NotImplementedException();
-    }
-  }
+		$url = UrlHelper::getFullUrl($_SERVER);
+		$method = $_SERVER['REQUEST_METHOD'];
+		switch ($method) 
+		{
+			case 'GET':
+			case 'HEAD':
+				$arguments = $_GET;
+				break;
+			case 'POST':
+				$arguments = $_POST;
+				break;
+			case 'PUT':
+			case 'DELETE':
+				parse_str(file_get_contents('php://input'), $arguments);
+				break;
+		}
+		$accept = $_SERVER['HTTP_ACCEPT'];
+		$this->handleRequest($url, $method, $arguments, $accept);
+	}
+
+	public function handleRequest($url, $method, $arguments, $accept) 
+	{
+		switch($method) 
+		{
+			case 'GET':
+				$this->performGet($url, $arguments, $accept);
+				break;
+			case 'HEAD':
+				$this->performHead($url, $arguments, $accept);
+				break;
+			case 'POST':
+				$this->performPost($url, $arguments, $accept);
+				break;
+			case 'PUT':
+				// Decode arguments
+				$json = key($arguments);
+				$json = str_replace("\\", "", $json);
+				$object = json_decode($json);
+				$tab = (array)$object;
+				// Call PUT
+				$this->performPut($url, $tab, $accept);
+				break;
+			case 'DELETE':
+				$this->performDelete($url, $arguments, $accept);
+				break;
+			default:
+				Exceptions::NotImplementedException();
+		}
+	}
 
 	public function performGet($url, $arguments, $accept) 
 	{
